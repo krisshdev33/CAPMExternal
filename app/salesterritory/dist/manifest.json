@@ -1,0 +1,155 @@
+{
+    "_version": "1.59.0",
+    "sap.app": {
+        "id": "com.deloitte.sap.salesterritory",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:lrop",
+            "version": "1.13.3",
+            "toolsId": "13f37d65-c27f-49e5-b705-05604c269e8f"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "odata/v4/external-capm/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "odataVersion": "4.0"
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.123.1",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.ushell": {},
+                "sap.fe.templates": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.deloitte.sap.salesterritory.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            },
+            "@i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            }
+        },
+        "resources": {
+            "css": []
+        },
+        "routing": {
+            "routes": [
+                {
+                    "pattern": ":?query:",
+                    "name": "A_SalesTerritoryList",
+                    "target": "A_SalesTerritoryList"
+                },
+                {
+                    "pattern": "A_SalesTerritory({key}):?query:",
+                    "name": "A_SalesTerritoryObjectPage",
+                    "target": "A_SalesTerritoryObjectPage"
+                }
+            ],
+            "targets": {
+                "A_SalesTerritoryList": {
+                    "type": "Component",
+                    "id": "A_SalesTerritoryList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "contextPath": "/A_SalesTerritory",
+                            "variantManagement": "Page",
+                            "navigation": {
+                                "A_SalesTerritory": {
+                                    "detail": {
+                                        "route": "A_SalesTerritoryObjectPage"
+                                    }
+                                }
+                            },
+                            "controlConfiguration": {
+                                "@com.sap.vocabularies.UI.v1.LineItem": {
+                                    "tableSettings": {
+                                        "type": "ResponsiveTable"
+                                    },
+                                    "actions": {
+                                        "listcontroller": {
+                                            "press": "com.deloitte.sap.salesterritory.ext.listcontroller.listcontroller.onClick",
+                                            "visible": true,
+                                            "enabled": true,
+                                            "requiresSelection": false,
+                                            "text": "test"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "A_SalesTerritoryObjectPage": {
+                    "type": "Component",
+                    "id": "A_SalesTerritoryObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "editableHeaderContent": false,
+                            "contextPath": "/A_SalesTerritory"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "sap.fiori": {
+        "registrationIds": [],
+        "archeType": "transactional"
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "FioriElements"
+    }
+}

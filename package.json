@@ -1,0 +1,46 @@
+{
+    "name": "ConsumeExternalServices",
+    "version": "1.0.0",
+    "description": "A simple CAP project.",
+    "repository": "<Add your repository here>",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap-cloud-sdk/http-client": "^3.14.0",
+        "@sap-cloud-sdk/resilience": "^3.14.0",
+        "@sap/cds": "^7",
+        "@sap/cds-hana": "^2",
+        "express": "^4"
+    },
+    "devDependencies": {
+        "@cap-js/sqlite": "^1",
+        "@sap/cds-dk": "^7",
+        "@sap/ux-specification": "^1.120.9",
+        "rimraf": "^3.0.2"
+    },
+    "scripts": {
+        "start": "cds-serve",
+        "watch-salesterritory": "cds watch --open salesterritory/webapp/index.html?sap-ui-xx-viewCache=false",
+        "undeploy": "cf undeploy ConsumeExternalServices --delete-services --delete-service-keys --delete-service-brokers",
+        "build": "rimraf resources mta_archives && mbt build --mtar archive",
+        "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
+    },
+    "cds": {
+        "requires": {
+            "db": "hana-cloud",
+            "salesterritory": {
+                "kind": "odata-v2",
+                "model": "srv/external/salesterritory",
+                "credentials": {
+                    "url": "https://sandbox.api.sap.com/sap/c4c/odata/v1/c4codataapi",
+                    "headers": {
+                        "APIKey": "epjJMjgPZXlv95eCUG7HAKxUN8SP0lE1"
+                    }
+                }
+            }
+        }
+    },
+    "sapux": [
+        "app/salesterritory"
+    ]
+}
